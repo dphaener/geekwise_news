@@ -1,0 +1,12 @@
+<div class="container">
+  <h1 style="text-align: center;">Sign in</h1>
+  <div class="form">
+    <%= form_tag(session_path) do %>
+      <div class="form-inputs">
+        <%= text_field_tag :username, nil, placeholder: "Enter your username", class: "form-control" %>
+        <%= password_field_tag :password, nil, placeholder: "Enter your password", class: "form-control" %>
+      </div> 
+      <%= submit_tag "Login" %>
+    <% end %>
+  </div>
+</div>

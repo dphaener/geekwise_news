@@ -8,7 +8,34 @@
 </head>
 <body>
 
-<%= yield %>
+<nav class="navbar">
+  <ul class="nav-left">
+    <li class="brand"><%= image_tag "geekwise.png" %><span> Geekwise News</span></li>
+    <li><%= link_to "Home", home_url %></li>
+  </ul>
+  <ul class="nav-right">
+    <% if logged_in? %>
+      <li>Welcome, <%= link_to current_user.username, profile_path(current_user.username) %></li>
+      <li><%= link_to "Settings", edit_user_path %></li>
+      <li><%= link_to "Logout", session_path, method: :delete %></li>
+    <% else %>
+      <li><%= link_to "Sign Up", new_user_path %></li>
+      <li><%= link_to "Login", new_session_path %></li>
+    <% end %>
+  </ul>
+</nav>
+
+<div class="main-content">
+  <% if flash[:notice] %>
+    <div class="flash notice"><%= flash[:notice] %></div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="flash alert"><%= flash[:alert] %></div>
+  <% end %>
+  <%= yield %>
+</div>
+
 
 </body>
 </html>

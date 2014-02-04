@@ -1,0 +1,22 @@
+@mixin border-radius($radius: 5px) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin clearfix {
+ // For modern browsers
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  // For IE 6/7 (trigger hasLayout)
+  & {
+    zoom: 1;
+  }
+}

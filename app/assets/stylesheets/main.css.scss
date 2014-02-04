@@ -1,0 +1,26 @@
+body{
+  height: 100%;
+  background: black;
+  color: #FFFFFF;
+}
+
+a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.main-content {
+  width: 80%;
+  margin-top: 55px;
+  margin-left: 10%;
+  background-color: #CC6600;
+  overflow: hidden;
+  padding: 20px;
+  & a {
+    color: #FFFFFF;
+    &:hover {
+      background-color: #CC6600;
+      text-decoration: none;
+    }
+  }
+}

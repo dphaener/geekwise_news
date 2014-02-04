@@ -1,49 +1,78 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-  setup do
-    @user = users(:one)
-  end
-
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:users)
-  end
-
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-  test "should create user" do
-    assert_difference('User.count') do
-      post :create, user: { username: "Batman", password: "abc123" }
+  context "GET #new" do
+    setup do
+      get :new
     end
 
-    assert_redirected_to user_path(assigns(:user))
+    should render_template 'new'
   end
 
-  test "should show user" do
-    get :show, id: @user
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @user
-    assert_response :success
-  end
-
-  test "should update user" do
-    patch :update, id: @user, user: { username: "Robin", password: "abc123" }
-    assert_redirected_to user_path(assigns(:user))
-  end
-
-  test "should destroy user" do
-    assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+  context 'POST #create' do
+    setup do
+      @user = Fabricate.attributes_for(:user)
     end
 
-    assert_redirected_to users_path
+    context 'with valid input' do
+      should 'create a new user' do
+        assert_difference('User.count') do
+          post :create, user: @user
+        end
+      end
+    end
+
+    context 'with invalid input' do
+      setup do
+        post :create, user: { password: "foo" }
+      end
+
+      should render_template 'new'
+    end
+  end
+  
+  context 'POST #update' do
+    context "if user is not logged in" do
+      setup do
+        put :update
+      end
+
+      should "redirect to login page" do
+        assert_redirected_to new_session_url
+      end
+    end
+
+    context "if user is logged in" do
+      context "and input is valid" do
+        setup do
+          @user = Fabricate(:user)
+          login_as(@user)
+          put :update, user: { username: "Scooby" }
+        end
+
+        should "redirect to edit user settings page" do
+          assert_redirected_to edit_user_url
+        end
+
+        should "flash a success notice" do
+          assert_not_nil(flash[:notice])
+        end
+
+        should "update the record" do
+          @user.reload
+          assert_equal "Scooby", @user.username
+        end
+      end
+
+      context "and input is invalid" do
+        setup do
+          @user = Fabricate(:user)
+          login_as(@user)
+          put :update, user: { password: "foo" }
+        end
+
+        should render_template "edit"
+      end
+    end
   end
 end

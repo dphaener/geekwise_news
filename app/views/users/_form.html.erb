@@ -1,17 +1,14 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+<div class="container">
+  <%= render "shared/errors", record: @user %>
+  <div class="form">
+    <%= form_for(@user, url: user_path) do |f| %>
+      <div class="form-inputs">
+        <%= f.text_field :username, placeholder: "Enter a username", class: "form-control" %>
+        <%= f.password_field :password, placeholder: "Enter a password", class: "form-control" %>
+      </div> 
+      <%= f.submit %>
+    <% end %>
   </div>
-<% end %>
+</div>
+
+

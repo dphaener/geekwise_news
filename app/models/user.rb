@@ -6,16 +6,9 @@ class User < ActiveRecord::Base
 
 	validates :username, presence: true, uniqueness: true, format: /\A[\w]+\z/
 
-	validates :password, length: { minimum: 6 }, format: /\d/
+	validates :password, length: { minimum: 6 }, format: /\d/, :if => :password_validatible?
 
-	def encrypt_password
-		if password.present?
-      self.password_salt = BCrypt::Engine.generate_salt
-      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
-    end
-	end
-
-	def self.authenticate(username, password)
+  def self.authenticate(username, password)
     user = find_by_username(username)
     if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user
@@ -23,5 +16,17 @@ class User < ActiveRecord::Base
       nil
     end
   end
+  
+private
 
+  def password_validatible?
+    password.present? || new_record?
+  end
+
+	def encrypt_password
+		if password.present?
+      self.password_salt = BCrypt::Engine.generate_salt
+      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
+    end
+	end
 end

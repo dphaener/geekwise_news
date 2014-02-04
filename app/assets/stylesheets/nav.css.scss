@@ -1,0 +1,48 @@
+.navbar {
+  @include clearfix;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+  padding: 5px 5px 0 5px;
+  background-color: #333333;
+  color: #FFFFFF;
+  img {
+    vertical-align: top;
+  }
+  span {
+    vertical-align: 50px;
+  }
+  ul {
+    list-style-type: none;
+    li {
+      padding: 0 15px;
+      line-height: 50px;
+      float: left;
+    }
+  }
+  a {
+    color: #FFFFFF;
+    text-decoration: none;
+    &:hover {
+      background-color: #333333;
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+  }
+  & .nav-left {
+    float: left;
+    margin-left: 10%;
+    margin-top: 0;
+  }
+  & .nav-right {
+    float: right;
+    margin-right: 10%;
+    margin-top: 0;
+  }
+  & .brand {
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
