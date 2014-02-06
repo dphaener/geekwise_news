@@ -1,8 +1,15 @@
 <h1>Posts</h1>
 <ol>
   <% @posts.each do |post| %>
-    <li>
-      <%= link_to post.title, post.url, target: 'blank' %> <span class="url">(<%= pretty_url(post.url) %>)</span><br />
+    <li class="post">
+      <%= link_to post.title, post.url, target: 'blank' %> <span class="url">(<%= pretty_url(post.url) %>)</span>
+      <% if current_user && !already_voted?(post.id, current_user.id) %>
+        <%= link_to image_tag("arrow_down.png", height: "12"), downvote_url(post.id), title: "Down vote" %>
+        <%= link_to image_tag("arrow-up.png", height: "12"), upvote_url(post.id), title: "Up vote" %>
+      <% end %>
+      <br />
+      <span class="subscript"><%= post.points %> points by <%= post.user.username %> <%= time_ago_in_words(post.created_at) %> ago | 
+        <%= link_to "#{post.comments.count} comments", comment_path(post.id) %></span>
     </li>
   <% end %>
 </ol>

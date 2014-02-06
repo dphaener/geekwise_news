@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GeekwiseNews</title>
+  <title>Geekwise News</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -12,6 +12,9 @@
   <ul class="nav-left">
     <li class="brand"><%= image_tag "geekwise.png" %><span> Geekwise News</span></li>
     <li><%= link_to "Home", home_url %></li>
+    <% if logged_in? %>
+      <li><%= link_to "New Post", new_post_path %></li>
+    <% end %>
   </ul>
   <ul class="nav-right">
     <% if logged_in? %>
@@ -33,6 +36,7 @@
   <% if flash[:alert] %>
     <div class="flash alert"><%= flash[:alert] %></div>
   <% end %>
+
   <%= yield %>
 </div>
 

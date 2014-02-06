@@ -15,10 +15,11 @@ class UsersControllerTest < ActionController::TestCase
     end
 
     context 'with valid input' do
-      should 'create a new user' do
+      should 'create a new user and redirect to the home page' do
         assert_difference('User.count') do
           post :create, user: @user
         end
+        assert_redirected_to home_url
       end
     end
 

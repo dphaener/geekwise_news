@@ -1,4 +1,22 @@
-<p id="notice"><%= notice %></p>
+<%= link_to @post.title, @post.url, target: 'blank' %> <span class="url">(<%= pretty_url(@post.url) %>)</span><br />
+<span class="subscript"><%= @post.points %> points by <%= @post.user.username %> <%= time_ago_in_words(@post.created_at) %> ago | <%= link_to "#{@post.comments.count} comments", comment_path(@post.id) %></span>
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<% if current_user %>
+  <div class="form">
+    <%= form_for(@comment) do |f| %>
+      <%= f.hidden_field :post_id, value: @post.id %>
+      <%= f.text_area :content %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+<% end %>
+
+<br />
+<br />
+
+<% @post.comments.each do |comment| %>
+  <div class="comment">
+    <span class="subscript"><%= comment.user.username %> <%= time_ago_in_words(comment.created_at) %> ago</span><br />
+    <span class="content"><%= comment.content %></span>
+  </div><br />
+<% end %>

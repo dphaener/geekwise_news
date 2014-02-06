@@ -11,6 +11,9 @@ GeekwiseNews::Application.routes.draw do
 
   get ":username" => "users#show", as: :profile
 
+  get "upvote/:id" => "posts#upvote", as: :upvote
+  get "downvote/:id" => "posts#downvote", as: :downvote
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
