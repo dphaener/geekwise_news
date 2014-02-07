@@ -13,6 +13,8 @@ GeekwiseNews::Application.routes.draw do
 
   get "upvote/:id" => "posts#upvote", as: :upvote
   get "downvote/:id" => "posts#downvote", as: :downvote
+  get "commentup/:id" => "comments#commentup", as: :commentup
+  get "commentdown/:id" => "comments#commentdown", as: :commentdown
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

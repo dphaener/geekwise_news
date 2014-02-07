@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :votes
   has_many :comments
+  has_many :comment_votes
   
 	attr_accessor :password
 

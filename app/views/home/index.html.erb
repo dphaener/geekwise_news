@@ -9,9 +9,12 @@
       <% end %>
       <br />
       <span class="subscript"><%= post.points %> points by <%= post.user.username %> <%= time_ago_in_words(post.created_at) %> ago | 
-        <%= link_to "#{post.comments.count} comments", comment_path(post.id) %></span>
+        <%= link_to "#{post.comments.count} comments", post_path(post.id) %></span>
     </li>
   <% end %>
+  <br />
+  <br />
+  <%= paginate @posts %>
 </ol>
 
 

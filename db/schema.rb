@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140206000016) do
+ActiveRecord::Schema.define(version: 20140207233509) do
+
+  create_table "comment_votes", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comment_votes", ["comment_id"], name: "index_comment_votes_on_comment_id"
+  add_index "comment_votes", ["user_id"], name: "index_comment_votes_on_user_id"
 
   create_table "comments", force: true do |t|
     t.datetime "created_at"
@@ -19,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140206000016) do
     t.text     "content"
     t.integer  "user_id"
     t.integer  "post_id"
+    t.integer  "points"
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
@@ -31,6 +42,7 @@ ActiveRecord::Schema.define(version: 20140206000016) do
     t.string   "url"
     t.integer  "points"
     t.integer  "user_id"
+    t.float    "rank"
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"
@@ -46,7 +58,6 @@ ActiveRecord::Schema.define(version: 20140206000016) do
   create_table "votes", force: true do |t|
     t.integer  "user_id"
     t.integer  "post_id"
-    t.boolean  "voted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

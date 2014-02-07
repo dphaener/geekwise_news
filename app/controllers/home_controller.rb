@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
 
   def index
-    @posts = Post.all
+    Post.calculate_ranking
+    @posts = Post.order("rank DESC").page(params[:page]).per(10)
   end
   
 end

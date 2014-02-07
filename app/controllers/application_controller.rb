@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?, :logout, :pretty_url, :already_voted?
+  helper_method :current_user, :logged_in?, :logout, :pretty_url, :already_voted?, :already_voted_comment?
 
   def login_as(user)
     session[:user_id] = user.id
@@ -28,11 +28,16 @@ class ApplicationController < ActionController::Base
 
   def pretty_url(url)
     url.slice! "http://"
+    url.slice! "https://"
     url.slice! "www."
     url
   end
 
   def already_voted?(post_id, user_id)
     Vote.exists?(post_id: post_id, user_id: user_id)
+  end
+
+  def already_voted_comment?(comment_id, user_id) 
+    CommentVote.exists?(comment_id: comment_id, user_id: user_id)
   end
 end
