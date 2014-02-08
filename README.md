@@ -1,2 +1,3 @@
 # Geekwise News
-## A Hacker News clone of sorts
+### A Hacker News clone
+***
